@@ -27,15 +27,20 @@ System.register(['angular2/core', './post.service', 'angular2/http'], function(e
             AppComponent = (function () {
                 function AppComponent(_postService) {
                     this._postService = _postService;
+                    this.isLoading = true;
                 }
                 AppComponent.prototype.ngOnInit = function () {
+                    var _this = this;
                     this._postService.getPosts()
-                        .subscribe(function (posts) { return console.log(posts); });
+                        .subscribe(function (posts) {
+                        _this.isLoading = false;
+                        console.log(posts);
+                    });
                 };
                 AppComponent = __decorate([
                     core_1.Component({
                         selector: 'my-app',
-                        template: "",
+                        template: "\n\t\t<div *ngIf=\"isLoading\">\n\t\t\t<i class=\"fa fa-spinner fa-spin fa-3x\"></i>\n\t\t</div>\n    \t\t",
                         providers: [post_service_1.PostService, http_1.HTTP_PROVIDERS],
                     }), 
                     __metadata('design:paramtypes', [post_service_1.PostService])
